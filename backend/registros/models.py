@@ -67,8 +67,9 @@ class PersonaAutorizada(models.Model):
 
     def clean(self): 
         # Lógica de validación: Limita el máximo de autorizados a 4
-        if self.alumno.autorizados.count() >= 4 and not self.pk: 
-            raise ValidationError("El sistema solo admite añadir 4 autorizados")
+        if self.alumno_id:
+            if self.alumno.autorizados.count() >= 4 and not self.pk: 
+                raise ValidationError("El sistema solo admite añadir 4 autorizados")
 
     def __str__(self): 
         return f"{self.nombre_completo} (Autorizado para {self.alumno.nombre})"

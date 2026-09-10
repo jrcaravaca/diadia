@@ -4,7 +4,7 @@ from .views import AlumnoViewSet, RegistroViewSet
 
 router = DefaultRouter()
 
-router.register(r'alumnos', AlumnnoViewSet)
+router.register(r'alumnos', AlumnoViewSet)
 router.register(r'registros', RegistroViewSet)
 
 urlpatterns = [

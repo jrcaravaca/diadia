@@ -7,6 +7,6 @@ class AlumnoViewSet(viewsets.ModelViewSet):
     serializer_class = AlumnoSerializer
 
 class RegistroViewSet(viewsets.ModelViewSet): 
-    queryset = Registro.objects.all().order_by('-fecha.hora')
+    queryset = Registro.objects.all().order_by('-fecha_hora')
     serializer_class = RegistroSerializer
 
