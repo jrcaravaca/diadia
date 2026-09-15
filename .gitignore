@@ -1,0 +1,22 @@
+# Entornos virtuales
+env/
+venv/
+
+# Base de datos local (nunca se sube a producción)
+db.sqlite3
+
+# Archivos compilados de Python (se generan solos)
+__pycache__/
+*.pyc
+*.pyo
+
+# Archivos multimedia subidos en local (fotos de DNI de prueba, etc.)
+media/
+
+# Archivos de entorno (contraseñas, configuraciones locales)
+.env
+
+# Frontend (Node y Vite)
+node_modules/
+dist/
+.eslintcache
