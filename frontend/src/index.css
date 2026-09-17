@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap');
 
 
-@theme: {
+@theme {
     --color-dia-primary: #7CB3F8;
     --color-dia-secondary: #FDFD96;
     --color-dia-tertiary: #B2F2E3: 
@@ -11,3 +11,4 @@
     --font-quicksand: 'Quicksand', sans-serif; 
     --font-vietnam: 'Be Vietnam Pro', sans-serif;
 }; 
+

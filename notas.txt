@@ -3,3 +3,6 @@ Pass: passwd123
 
 Usuario: profe_laura
 Pass: passwd123
+
+Usuario: admin
+Pass: admin123
