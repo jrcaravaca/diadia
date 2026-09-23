@@ -16,8 +16,8 @@ export default function FichaAlumno() {
     }, []);
 
     return (
-        //Fondo y fuente general
-        <div className="p-8 bg-gray-50 min-h-screen font-vietnam text-dia-neutral">
+        //Contenedor transparente
+        <div className="p-8">
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {alumnos.map((alumno) => (

@@ -5,10 +5,11 @@
 @theme {
     --color-dia-primary: #7CB3F8;
     --color-dia-secondary: #FDFD96;
-    --color-dia-tertiary: #B2F2E3: 
+    --color-dia-tertiary: #B2F2E3;
     --color-dia-neutral: #444444;
 
-    --font-quicksand: 'Quicksand', sans-serif; 
+    --font-quicksand: 'Quicksand', sans-serif;
     --font-vietnam: 'Be Vietnam Pro', sans-serif;
-}; 
+}
 
+;
