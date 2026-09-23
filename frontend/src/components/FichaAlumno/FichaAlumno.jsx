@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import apiClient from "../api/client";
+import apiClient from "../../api/client";
+import { BotonAccion } from '../ui/BotonAccion';
 
 export default function FichaAlumno() {
     const [alumnos, setAlumnos] = useState([]);
@@ -45,27 +46,9 @@ export default function FichaAlumno() {
                         </div>
                         {/* Botones */}
                         <div className="flex justify-between items-center mt-2 p-4 border-t border-gray-100">
-                            {/* Boton Comida */}
-                            <div className="flex flex-col items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-                                <div className="w-10 h-10 rounded-full bg-dia-secondary flex items-center justify-center shadow-sm">
-                                    <span className="text-lg">🍽️</span>
-                                </div>
-                                <span className="text-xs font-semibold text-gray-500">Comida</span>
-                            </div>
-                            {/* Boton Siesta */}
-                            <div className="flex flex-col items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-                                <div className="w-10 h-10 rounded-full bg-dia-primary text-white flex items-center justify-center shadow-sm">
-                                    <span className="text-lg">🌙</span>
-                                </div>
-                                <span className="text-xs font-semibold text-gray-500">Siesta</span>
-                            </div>
-                            {/* Boton Baño */}
-                            <div className="flex flex-col items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-                                <div className="w-10 h-10 rounded-full bg-dia-tertiary text-white flex items-center justify-center shadow-sm">
-                                    <span className="text-lg">💧</span>
-                                </div>
-                                <span className="text-xs font-semibold text-gray-500">Baño</span>
-                            </div>
+                            <BotonAccion icono="🍽️" texto="Comida" colorFondo="bg-dia-secondary" />
+                            <BotonAccion icono="🌙" texto="Siesta" colorFondo="bg-dia-primary" />
+                            <BotonAccion icono="💧" texto="Baño" colorFondo="bg-dia-tertiary" />
                         </div>
                     </div>
                 ))}

@@ -1,4 +1,4 @@
-import FichaAlumno from "./components/FichaAlumno.jsx";
+import FichaAlumno from "./components/FichaAlumno/FichaAlumno.jsx";
 
 function App() {
   return (
