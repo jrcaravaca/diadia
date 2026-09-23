@@ -20,7 +20,7 @@ class PerfilFamiliar(models.Model):
         return f"Perfil Familiar - {self.usuario.username}"
 class Aula(models.Model): 
     nombre = models.CharField(max_length=50)
-    profesor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='aulas_asignadas')
+    profesor = models.ForeignKey(PerfilProfesor, on_delete=models.SET_NULL, null=True, related_name='aulas_asignadas')
 
     def __str__(self): 
         return self.nombre
@@ -28,7 +28,7 @@ class Aula(models.Model):
 class Alumno(models.Model): 
     nombre = models.CharField(max_length=100)
     aula = models.ForeignKey(Aula, on_delete=models.CASCADE, related_name='alumnos')
-    familiares = models.ManyToManyField(User, related_name="hijos", blank=True)
+    familiares = models.ManyToManyField(PerfilFamiliar, related_name="hijos", blank=True)
     
 
     def __str__(self): 

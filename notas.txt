@@ -1,7 +1,8 @@
 Usuario: carlos_alcantara
 Pass: passwd123
 
-Usuario: profe_laura
+PROFESORA
+Usuario: LauraR
 Pass: passwd123
 
 Usuario: admin
