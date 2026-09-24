@@ -1,6 +1,6 @@
-export const BotonAccion = ({ icono, texto, colorFondo }) => {
+export const BotonAccion = ({ icono, texto, colorFondo, onClick }) => {
     return (
-        <div className="flex flex-col items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
+        <div onClick={onClick} className="flex flex-col items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
             <div className={`w-10 h-10 rounded-full ${colorFondo} flex items-center justify-center shadow-sm`}>
                 <span className="text-lg">{icono}</span>
             </div>

@@ -15,6 +15,19 @@ export default function FichaAlumno() {
             })
     }, []);
 
+    const registrarAccion = (alumnoId, tipoAccion) => {
+        apiClient.post('registros/', {
+            alumno: alumnoId,
+            tipo: tipoAccion
+        })
+            .then(response => {
+                console.log(`Registro de ${tipoAccion} guardado con exito`, response.data);
+            })
+            .catch(error => {
+                console.error("Error al guardar el registro", error)
+            });
+    };
+
     return (
         //Contenedor transparente
         <div className="p-8">
@@ -46,9 +59,9 @@ export default function FichaAlumno() {
                         </div>
                         {/* Botones */}
                         <div className="flex justify-between items-center mt-2 p-4 border-t border-gray-100">
-                            <BotonAccion icono="🍽️" texto="Comida" colorFondo="bg-dia-secondary" />
-                            <BotonAccion icono="🌙" texto="Siesta" colorFondo="bg-dia-primary" />
-                            <BotonAccion icono="💧" texto="Baño" colorFondo="bg-dia-tertiary" />
+                            <BotonAccion icono="🍽️" texto="Comida" colorFondo="bg-dia-secondary" onClick={() => registrarAccion(alumno.id, 'COMIDA')} />
+                            <BotonAccion icono="🌙" texto="Siesta" colorFondo="bg-dia-primary" onClick={() => registrarAccion(alumno.id, 'SIESTA')} />
+                            <BotonAccion icono="💧" texto="Baño" colorFondo="bg-dia-tertiary" onClick={() => registrarAccion(alumno.id, 'BAÑO')} />
                         </div>
                     </div>
                 ))}

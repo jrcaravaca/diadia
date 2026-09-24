@@ -19,5 +19,5 @@ class RegistroSerializer(serializers.ModelSerializer):
 
     class Meta: 
         model = Registro
-        fields = ['id', 'alumno', 'nombre_alumno', 'tipo', 'descripción', 'foto', 'fecha_hora']
+        fields = ['id', 'alumno', 'nombre_alumno', 'tipo', 'descripcion', 'foto', 'fecha_hora']
         
