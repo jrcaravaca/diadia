@@ -4,6 +4,8 @@ import { BotonAccion } from '../ui/BotonAccion';
 
 export default function FichaAlumno() {
     const [alumnos, setAlumnos] = useState([]);
+    const [modalConfig, setModalConfig] = useState({ activo: false, alumnoId: null, tipo: '', nombre: '' });
+    const [descripcion, setDescripcion] = useState('')
 
     useEffect(() => {
         apiClient.get('alumnos/')
@@ -15,13 +17,20 @@ export default function FichaAlumno() {
             })
     }, []);
 
-    const registrarAccion = (alumnoId, tipoAccion) => {
+    const abrirModal = (alumnoId, tipoAccion, nombreAlumno) => {
+        setModalConfig({ activo: true, alumnoId: alumnoId, tipo: tipoAccion, nombre: nombreAlumno })
+        setDescripcion('')
+    };
+
+    const confirmarRegistro = () => {
         apiClient.post('registros/', {
-            alumno: alumnoId,
-            tipo: tipoAccion
+            alumno: modalConfig.alumnoId,
+            tipo: modalConfig.tipo,
+            descripcion: descripcion
         })
             .then(response => {
-                console.log(`Registro de ${tipoAccion} guardado con exito`, response.data);
+                console.log(`Registro guardado`, response.data);
+                setModalConfig({ activo: false, alumnoId: null, tipo: '', nombre: '' })
             })
             .catch(error => {
                 console.error("Error al guardar el registro", error)
@@ -59,13 +68,42 @@ export default function FichaAlumno() {
                         </div>
                         {/* Botones */}
                         <div className="flex justify-between items-center mt-2 p-4 border-t border-gray-100">
-                            <BotonAccion icono="🍽️" texto="Comida" colorFondo="bg-dia-secondary" onClick={() => registrarAccion(alumno.id, 'COMIDA')} />
-                            <BotonAccion icono="🌙" texto="Siesta" colorFondo="bg-dia-primary" onClick={() => registrarAccion(alumno.id, 'SIESTA')} />
-                            <BotonAccion icono="💧" texto="Baño" colorFondo="bg-dia-tertiary" onClick={() => registrarAccion(alumno.id, 'BAÑO')} />
+                            <BotonAccion icono="🍽️" texto="Comida" colorFondo="bg-dia-secondary" onClick={() => abrirModal(alumno.id, 'COMIDA', alumno.nombre)} />
+                            <BotonAccion icono="🌙" texto="Siesta" colorFondo="bg-dia-primary" onClick={() => abrirModal(alumno.id, 'SIESTA', alumno.nombre)} />
+                            <BotonAccion icono="💧" texto="Baño" colorFondo="bg-dia-tertiary" onClick={() => abrirModal(alumno.id, 'BAÑO', alumno.nombre)} />
                         </div>
                     </div>
                 ))}
             </div>
+
+            {/* MODAL FLOTANTE */}
+            {modalConfig.activo && (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-xl">
+                        <h3 className="text-xl font-quicksand font-bold mb-1">Registro de {modalConfig.tipo}</h3>
+                        <p className="text-sm text-gray-500 mb-4">Añadiendo información para {modalConfig.nombre}</p>
+                        <textarea
+                            className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 text-sm mb-4 outline-done focus:border-dia-primary"
+                            rows="3"
+                            placeholder="Observaciones"
+                            value={descripcion}
+                            onChange={(e) => setDescripcion(e.target.value)}
+                        ></textarea>
+                        <div className="flex gap-3">
+                            <button
+                                className="flex-1 py-3 rounded-xl font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200"
+                                onClick={() => setModalConfig({ activo: false, alumnoId: null, tipo: "", nombre: "" })}>
+                                Cancelar
+                            </button>
+                            <button
+                                className="flex-1 py-3 roudend-xl font-semibold text-white bg-dia-primary hover:opacity-90"
+                                onClick={confirmarRegistro}>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
