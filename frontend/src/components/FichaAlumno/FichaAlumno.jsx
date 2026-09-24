@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../api/client";
-import { BotonAccion } from '../ui/BotonAccion';
+import { BotonAccion, } from '../ui/BotonAccion.jsx';
+import { ModalRegistro } from "../ui/ModalRegistro.jsx";
 
 export default function FichaAlumno() {
     const [alumnos, setAlumnos] = useState([]);
     const [modalConfig, setModalConfig] = useState({ activo: false, alumnoId: null, tipo: '', nombre: '' });
-    const [descripcion, setDescripcion] = useState('')
 
     useEffect(() => {
         apiClient.get('alumnos/')
@@ -19,21 +19,23 @@ export default function FichaAlumno() {
 
     const abrirModal = (alumnoId, tipoAccion, nombreAlumno) => {
         setModalConfig({ activo: true, alumnoId: alumnoId, tipo: tipoAccion, nombre: nombreAlumno })
-        setDescripcion('')
+
     };
 
-    const confirmarRegistro = () => {
+    const confirmarRegistro = (alumnoId, tipo, textoDescipcion) => {
         apiClient.post('registros/', {
-            alumno: modalConfig.alumnoId,
-            tipo: modalConfig.tipo,
-            descripcion: descripcion
+            alumno: alumnoId,
+            tipo: tipo,
+            descripcion: textoDescipcion
         })
             .then(response => {
                 console.log(`Registro guardado`, response.data);
                 setModalConfig({ activo: false, alumnoId: null, tipo: '', nombre: '' })
+                alert("Registro Guardado Correctamente")
             })
             .catch(error => {
                 console.error("Error al guardar el registro", error)
+                alert('Hubo un error al guardar')
             });
     };
 
@@ -77,33 +79,11 @@ export default function FichaAlumno() {
             </div>
 
             {/* MODAL FLOTANTE */}
-            {modalConfig.activo && (
-                <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
-                    <div className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-xl">
-                        <h3 className="text-xl font-quicksand font-bold mb-1">Registro de {modalConfig.tipo}</h3>
-                        <p className="text-sm text-gray-500 mb-4">Añadiendo información para {modalConfig.nombre}</p>
-                        <textarea
-                            className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 text-sm mb-4 outline-done focus:border-dia-primary"
-                            rows="3"
-                            placeholder="Observaciones"
-                            value={descripcion}
-                            onChange={(e) => setDescripcion(e.target.value)}
-                        ></textarea>
-                        <div className="flex gap-3">
-                            <button
-                                className="flex-1 py-3 rounded-xl font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200"
-                                onClick={() => setModalConfig({ activo: false, alumnoId: null, tipo: "", nombre: "" })}>
-                                Cancelar
-                            </button>
-                            <button
-                                className="flex-1 py-3 roudend-xl font-semibold text-white bg-dia-primary hover:opacity-90"
-                                onClick={confirmarRegistro}>
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ModalRegistro
+                config={modalConfig}
+                onClose={() => setModalConfig({ activo: false, alumnoId: null, tipo: '', nombre: '' })}
+                onGuardar={confirmarRegistro}
+            />
         </div>
     )
 }
