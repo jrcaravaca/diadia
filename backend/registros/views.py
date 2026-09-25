@@ -1,6 +1,7 @@
+from backend.registros.models import Aula
 from rest_framework import viewsets
-from .models import Alumno, Registro
-from .serializers import AlumnoSerializer, RegistroSerializer
+from .models import Alumno, Registro, Aula
+from .serializers import AlumnoSerializer, RegistroSerializer, AulaSerializer
 
 class AlumnoViewSet(viewsets.ModelViewSet): 
     queryset = Alumno.objects.all()
@@ -19,3 +20,6 @@ class RegistroViewSet(viewsets.ModelViewSet):
     queryset = Registro.objects.all().order_by('-fecha_hora')
     serializer_class = RegistroSerializer
 
+class AulaViewSet(viewsets.ModelViewSet): 
+    queryset = Aula.objects.all()
+    serializer_class = AulaSerializer

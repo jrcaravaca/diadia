@@ -1,3 +1,4 @@
+from django.contrib.auth import base_user
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Aula, Alumno, Registro, Mensaje, PerfilProfesor, PerfilFamiliar, PersonaAutorizada
@@ -21,3 +22,9 @@ class RegistroSerializer(serializers.ModelSerializer):
         model = Registro
         fields = ['id', 'alumno', 'nombre_alumno', 'tipo', 'descripcion', 'foto', 'fecha_hora']
         
+
+class AulaSerializer(serializers.ModelSerializer): 
+
+    class Meta: 
+        model = Aula
+        fields = ['id', 'nombre', 'profesor']
