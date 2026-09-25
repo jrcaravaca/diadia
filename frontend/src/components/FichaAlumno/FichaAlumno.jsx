@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import apiClient from "../../api/client";
 import { BotonAccion, } from '../ui/BotonAccion.jsx';
 import { ModalRegistro } from "../ui/ModalRegistro.jsx";
 
 export default function FichaAlumno() {
+    const { id } = useParams();
     const [alumnos, setAlumnos] = useState([]);
     const [modalConfig, setModalConfig] = useState({ activo: false, alumnoId: null, tipo: '', nombre: '' });
 
     useEffect(() => {
-        apiClient.get('alumnos/')
+        apiClient.get(`alumnos/?aula=${id}`)
             .then(response => {
                 setAlumnos(response.data)
             })
