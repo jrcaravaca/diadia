@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import apiClient from "../../api/client";
 import { BotonAccion, } from '../ui/BotonAccion.jsx';
 import { ModalRegistro } from "../ui/ModalRegistro.jsx";
@@ -44,7 +44,13 @@ export default function FichaAlumno() {
     return (
         //Contenedor transparente
         <div className="p-8">
-
+            {/* Boton de volver */}
+            <Link
+                to="/"
+                className="inline-flex items-center text-sm font-semibold text-gray-500 hover:text-dia-primary transition-color mb-6">
+                ← Volver a aulas
+            </Link>
+            {/* Ficha ALumno */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {alumnos.map((alumno) => (
                     // Tarjeta estilo burbuja
