@@ -1,4 +1,3 @@
-from backend.registros.models import Aula
 from rest_framework import viewsets
 from .models import Alumno, Registro, Aula
 from .serializers import AlumnoSerializer, RegistroSerializer, AulaSerializer
