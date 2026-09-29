@@ -56,11 +56,16 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
                 ) : (
                     <ul className="space-y-2">
                         {registros.map(reg => (
-                            <li key={reg.id} className="text-sm flex justify-between bg-gray-50 p-2 rounded">
-                                <span className="font-semibold text-dia-primary">{reg.tipo}</span>
-                                <span className="text-gray-500">
-                                    {new Date(reg.fecha_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </span>
+                            <li key={reg.id} className="bg-gray-50 p-3 rounded-lg border border-gray-100 block">
+                                <div className="flex justify-between w-full">
+                                    <span className="font-semibold text-dia-primary">{reg.tipo}</span>
+                                    <span className="text-gray-500">
+                                        {new Date(reg.fecha_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </span>
+                                </div>
+                                {reg.descripcion && (
+                                    <p className="text-xs text-gray-500 mt-1 italic text-gray-60">"{reg.descripcion}"</p>
+                                )}
                             </li>
                         ))}
                     </ul>
