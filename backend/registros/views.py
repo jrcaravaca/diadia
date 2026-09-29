@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from .models import Alumno, Registro, Aula
 from .serializers import AlumnoSerializer, RegistroSerializer, AulaSerializer
+from django.utils import timezone
 
 class AlumnoViewSet(viewsets.ModelViewSet): 
     queryset = Alumno.objects.all()
@@ -18,6 +19,19 @@ class AlumnoViewSet(viewsets.ModelViewSet):
 class RegistroViewSet(viewsets.ModelViewSet): 
     queryset = Registro.objects.all().order_by('-fecha_hora')
     serializer_class = RegistroSerializer
+
+    def get_queryset(self): 
+        queryset = Registro.objects.all().order_by('-fecha_hora')
+        alumno_id = self.request.query_params.get('alumno')
+
+        if alumno_id is not None: 
+            hoy = timezone.now().date()
+            queryset = queryset.filter(
+                alumno_id=alumno_id,
+                fecha_hora__date =hoy                
+                )
+
+        return queryset
 
 class AulaViewSet(viewsets.ModelViewSet): 
     queryset = Aula.objects.all()
