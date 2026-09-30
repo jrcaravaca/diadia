@@ -13,6 +13,19 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
             .catch(error => console.error("Error cargando registros:", error));
     }, [alumno.id, refresh]);
 
+    const borrarRegistro = (idRegistro) => {
+        if (window.confirm("¿Seguro que quieres borrar este registro?")) {
+            apiClient.delete(`registros/${idRegistro}/`)
+                .then(() => {
+                    setRegistros(prevRegistros => prevRegistros.filter(reg => reg.id !== idRegistro))
+                })
+                .catch(error => {
+                    console.error("Error al borrar el registro", error)
+                    alert("No se puede borrar el registro.")
+                });
+        }
+    };
+
     return (
         <div className="bg-white p-6 rounded-4xl shadow-md gap-5 flex flex-col">
 
@@ -57,11 +70,18 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
                     <ul className="space-y-2">
                         {registros.map(reg => (
                             <li key={reg.id} className="bg-gray-50 p-3 rounded-lg border border-gray-100 block">
-                                <div className="flex justify-between w-full">
+                                <div className="flex justify-between w-full items-center">
                                     <span className="font-semibold text-dia-primary">{reg.tipo}</span>
                                     <span className="text-gray-500">
                                         {new Date(reg.fecha_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </span>
+                                    <button
+                                        onClick={() => borrarRegistro(reg.id)}
+                                        className="text-gray-300 hover:text-red-500 transition-color p-1 cursor-pointer"
+                                        title="Eliminar registro"
+                                    >
+                                        🗑️
+                                    </button>
                                 </div>
                                 {reg.descripcion && (
                                     <p className="text-xs text-gray-500 mt-1 italic text-gray-60">"{reg.descripcion}"</p>
