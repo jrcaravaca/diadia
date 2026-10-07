@@ -25,22 +25,31 @@ export default function FichaAlumno() {
         setModalConfig({ activo: true, alumnoId: alumnoId, tipo: tipoAccion, nombre: nombreAlumno })
     };
 
-    const confirmarRegistro = (alumnoId, tipo, textoDescipcion) => {
-        apiClient.post('registros/', {
-            alumno: alumnoId,
-            tipo: tipo,
-            descripcion: textoDescipcion
+    const confirmarRegistro = (alumnoId, tipo, textoDescipcion, fotoArchivo) => {
+
+        const formData = new FormData();
+
+        formData.append('alumno', alumnoId)
+        formData.append('tipo', tipo)
+        formData.append('descripcion', textoDescipcion)
+
+        if (fotoArchivo) {
+            formData.append('foto', fotoArchivo)
+        }
+
+        apiClient.post('registros/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
             .then(response => {
-                console.log(`Registro guardado`, response.data);
-                setModalConfig({ activo: false, alumnoId: null, tipo: '', nombre: '' })
+                setModalConfig({ activo: false, alumnoId: null, tipo: '', nombre: '' });
                 setRefresh(prev => prev + 1);
-                alert("Registro Guardado Correctamente")
             })
             .catch(error => {
                 console.error("Error al guardar el registro", error)
                 alert('Hubo un error al guardar')
-            });
+            })
     };
 
     return (
