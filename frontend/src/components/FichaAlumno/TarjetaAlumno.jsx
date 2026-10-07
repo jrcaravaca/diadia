@@ -86,6 +86,15 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
                                 {reg.descripcion && (
                                     <p className="text-xs text-gray-500 mt-1 italic text-gray-60">"{reg.descripcion}"</p>
                                 )}
+                                {reg.foto && (
+                                    <div className="mt-2 pt-2 border-t border-gray-200">
+                                        <img
+                                            src={reg.foto.startsWith('http') ? reg.foto : `http://127.0.0.1:8000${reg.foto}`}
+                                            alt={`Registro de ${reg.tipo}`}
+                                            className="w-full h-32 object-cover rounded-lg border border-gray-100"
+                                        />
+                                    </div>
+                                )}
                             </li>
                         ))}
                     </ul>
