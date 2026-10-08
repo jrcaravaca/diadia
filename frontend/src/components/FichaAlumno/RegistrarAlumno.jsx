@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../api/client";
 
-export default fuction RegistrarAlumno() {
+export default function RegistrarAlumno() {
     const [aulas, setAulas] = useState([]);
     const [nombre, setNombre] = useState('');
     const [aulaId, setAulaId] = useState('');
@@ -28,7 +28,7 @@ export default fuction RegistrarAlumno() {
 
         apiClient.post('alumnos/', {
             nombre: nombre,
-            aula: aulaID
+            aula: aulaId
         })
             .then(response => {
                 if (seguirAñadiendo) {
@@ -97,7 +97,7 @@ export default fuction RegistrarAlumno() {
                     </button>
                     <button
                         type="button"
-                        onClick={(e) = guardarAlumno(e, false)}
+                        onClick={(e) => guardarAlumno(e, false)}
                         className="px-4 py-2 bg-dia-primary text-white hover:bg-blue-600 rounded-xl font-medium transition-colors">
                         Guardar
                     </button>

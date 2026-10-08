@@ -24,6 +24,13 @@ export default function VistaAulas() {
         <div className='p-8'>
             <h1 className='text-3xl font-quicksand font-bold mb-6'>Selecciona un Aula</h1>
 
+            <Link
+                to="/nuevo-alumno"
+                className='bg-dia-primary text-white px-5 py-2 rounded-xl font-medium shadow-sm hover:bg-blue-600 transition-colors'
+            >
+                + Añadir Alumno
+            </Link>
+
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {aulas.map((aula) => (
                     <Link
