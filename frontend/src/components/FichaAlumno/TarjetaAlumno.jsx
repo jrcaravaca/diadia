@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../api/client";
 import { BotonAccion } from "../ui/BotonAccion";
+import { Link } from "react-router-dom";
 
 export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
     const [registros, setRegistros] = useState([])
@@ -53,6 +54,10 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
                     ))}
                 </div>
             </div>
+
+            <Link to={`/editar-alumno/${alumno.id}`} className="text-sm text-blue-500 hover:underline">
+                Editar Alumno
+            </Link>
 
             {/* BOTONES */}
             <div className="flex justify-between items-center mt-2 p-4 border-t border-gray-100">

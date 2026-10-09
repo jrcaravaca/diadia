@@ -12,7 +12,7 @@ export default function EditarAlumno() {
 
     // Datos Alumno
     const [nombre, setNombre] = useState('');
-    const [aulaId, setAulaID] = useState('');
+    const [aulaId, setAulaId] = useState('');
     const [familiaresSeleccionados, setFamiliaresSeleccionados] = useState([])
 
     // Cargar datos al iniciar el componente
@@ -20,7 +20,7 @@ export default function EditarAlumno() {
         // Aulas
         apiClient.get('aulas/')
             .then(res => setAulas(res.data.results ? res.data.results : res.data))
-            .catch(err => console.error("Error cargando aulas".err));
+            .catch(err => console.error("Error cargando aulas", err));
 
         // Familiares
         apiClient.get('familiares/')
@@ -48,7 +48,7 @@ export default function EditarAlumno() {
     // Friccion POSITIVA de seguridad
     const guardarCambios = () => {
         //El objetivo de esta función es que el usuario que guarde los datos, se aseguré de que los datos son correctos
-        if (!nombre.trim() || !aula.id) {
+        if (!nombre.trim() || !aulaId) {
             alert("El nombre y el aula son obligatorios");
             return
         }
@@ -60,13 +60,15 @@ export default function EditarAlumno() {
                 .map(fam => `${fam.username} (DNI: ${fam.dni})`)
                 .join(' y ');
 
-            const mensajeSeguridad = `⚠️ ATENCIÓN: Privacidad de datos\n\nEstás a punto de dar acceso a toda la información, fotos y registros de
-            ${nombre} a:\n\n${nombresFamilias}\n\n¿Confirmas que estos padres corresponden estrictamente a este alumno?`;
+            const mensajeSeguridad = `⚠️ ATENCIÓN: Privacidad de datos\n\nEstás a punto de dar acceso a toda la información, fotos y registros de ${nombre} a:\n\n${nombresFamilias}\n\n¿Confirmas que estos padres corresponden estrictamente a este alumno?`;
 
             const seguro = window.confirm(mensajeSeguridad);
 
             // Si el usuario pulsa cancelar, abortamos la función aquí mismo
             if (!seguro) return;
+        } else {
+            const seguroVacio = window.confirm(`⚠️ ATENCIÓN: ${nombre} se va a guardar SIN ningún familiar asignado.\n\n¿Estás seguro de continuar?`)
+            if (!seguroVacio) return;
         }
 
         // Si pasa la seguridad continuamos aquí, enviamos el PUT a Django
@@ -111,7 +113,7 @@ export default function EditarAlumno() {
                     <label className='block text-sm font-medium text-gray-700 mb-2'>Cambiar de Aula</label>
                     <select
                         value={aulaId}
-                        onChange={(e) => setAulaID(e.target.value)}
+                        onChange={(e) => setAulaId(e.target.value)}
                         className='w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dia-primary'
                         required
                     >
