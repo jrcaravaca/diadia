@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Alumno, Registro, Aula
-from .serializers import AlumnoSerializer, RegistroSerializer, AulaSerializer
+from .models import Alumno, Registro, Aula, PerfilFamiliar
+from .serializers import AlumnoSerializer, RegistroSerializer, AulaSerializer, PerfilFamiliarSerializer
 from django.utils import timezone
 
 class AlumnoViewSet(viewsets.ModelViewSet): 
@@ -36,3 +36,9 @@ class RegistroViewSet(viewsets.ModelViewSet):
 class AulaViewSet(viewsets.ModelViewSet): 
     queryset = Aula.objects.all()
     serializer_class = AulaSerializer
+
+
+class PerfilFamiliarViewSet(viewsets.ModelViewSet): 
+    queryset = PerfilFamiliar.objects.all()
+    serializer_class = PerfilFamiliarSerializer
+

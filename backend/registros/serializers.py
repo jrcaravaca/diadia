@@ -28,3 +28,13 @@ class AulaSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Aula
         fields = ['id', 'nombre', 'profesor']
+
+
+class PerfilFamiliarSerializer(serializers.ModelSerializer): 
+    username = serializers.CharField(source='usuario.username', read_only=True)
+    email = serializers.CharField(source='usuario.email', read_only=True)
+
+    class Meta:
+        model = PerfilFamiliar
+        fields = ['id', 'username', 'email', 'dni', 'telefono']
+
