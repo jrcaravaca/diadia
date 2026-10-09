@@ -6,7 +6,14 @@ from .models import Aula, Alumno, Registro, Mensaje, PerfilProfesor, PerfilFamil
 class PersonaAutorizadaSerializer(serializers.ModelSerializer): 
     class Meta: 
         model = PersonaAutorizada
-        fields = ['id', 'nombre_completo', 'dni', 'foto_dni']
+        fields = ['id', 'alumno', 'nombre_completo', 'dni', 'foto_dni']
+
+    def validate(self, data): 
+        alumno = data.get('alumno')
+
+        if alumno and alumno.autorizados.count() >= 4:
+            raise serializers.ValidationError("detail","El sistema solo admite añadir 4 personas autorizadas")
+        return data
 
 class AlumnoSerializer(serializers.ModelSerializer): 
     autorizados = PersonaAutorizadaSerializer(many=True, read_only=True)
@@ -37,4 +44,5 @@ class PerfilFamiliarSerializer(serializers.ModelSerializer):
     class Meta:
         model = PerfilFamiliar
         fields = ['id', 'username', 'email', 'dni', 'telefono']
+
 

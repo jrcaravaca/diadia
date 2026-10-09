@@ -15,6 +15,12 @@ export default function EditarAlumno() {
     const [aulaId, setAulaId] = useState('');
     const [familiaresSeleccionados, setFamiliaresSeleccionados] = useState([])
 
+    //Estados de los autorizados
+    const [autorizados, setAutorizados] = useState([]);
+    const [nuevoNombre, setNuevoNombre] = useState('');
+    const [nuevoDNI, setNuevoDni] = useState('');
+    const [nuevaFoto, setNuevaFoto] = useState('');
+
     // Cargar datos al iniciar el componente
     useEffect(() => {
         // Aulas
@@ -31,8 +37,9 @@ export default function EditarAlumno() {
         apiClient.get(`alumnos/${id}/`)
             .then(res => {
                 setNombre(res.data.nombre);
-                setAulaID(res.data.aula);
+                setAulaId(res.data.aula);
                 setFamiliaresSeleccionados(res.data.familiares)
+                setAutorizados(res.data.autorizados || [])
             })
             .catch(err => console.error("Error cargando alumno", err));
 
@@ -85,6 +92,57 @@ export default function EditarAlumno() {
                 alert("Hubo un error al guardar los cambios")
             });
     };
+
+    // Función añadir auturizados
+    const agregarAutorizado = (e) => {
+        e.preventDefault();
+
+        if (autorizados.length >= 4) {
+            alert("El sistema solo permite un máximo de 4 personas autorizadas.")
+            return;
+        }
+
+        if (!nuevoNombre.trim() || !nuevoDNI.trim()) {
+            alert('El nombre completo y el DNI son obligatorios.')
+            return
+        }
+
+        const formData = new FormData();
+        formData.append('alumno', id);
+        formData.append('nombre_completo', nuevoNombre);
+        formData.append('dni', nuevoDNI);
+        if (nuevaFoto) {
+            formData.append('foto_dni', nuevaFoto);
+        }
+
+        apiClient.post('autorizados/', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+            .then(res => {
+                setAutorizados([...autorizados, res.data]);
+                setNuevoNombre('');
+                setNuevoDni('');
+                setNuevaFoto(null)
+            })
+            .catch(err => {
+                console.error("Error al añadir autorizado", err);
+                alert('Error al guardar persona autorizada')
+            });
+
+    }
+
+    // Función eleminar autorizados
+
+    const eliminarAutorizado = (autorizadoId) => {
+        if (!window.confirm("¿Seguro que quieres eliminar a esta persona autorizada?")) return;
+
+        apiClient.delete(`autorizados/${autorizadoId}`)
+            .then(() => {
+                setAutorizados(autorizados.filter(a => a.id !== autorizadoId));
+            })
+            .catch(err => console.error("Error al eliminar autorizado", err))
+    };
+
 
     return (
         <div className="p-8 max-w-xl mx-auto">
@@ -155,7 +213,72 @@ export default function EditarAlumno() {
                     </button>
                 </div>
             </form>
+
+            <div className='mt-8 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 space-y-6'>
+                <h2 className='text-xl font-bold text-dia-neutral'>Personas Autorizadas para Recogida</h2>
+
+                {/* Lista de autorizados existentes */}
+                <div className='space-y-3'>
+                    {autorizados.map(aut => (
+                        <div key={aut.id} className='flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100'>
+                            <div>
+                                <p className='font-semibold text-gray-800'>{aut.nombre_completo}</p>
+                                <p className='text-xs text-gray-500'>DNI: {aut.dni}</p>
+                            </div>
+                            <button
+                                type='button'
+                                onClick={() => eliminarAutorizado(aut - id)}
+                                className='text-red-500 hover:text-red-700 text-sm font-medium'
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    ))}
+
+                    {autorizados.length === 0 && (
+                        <p className='text-sm text-gray-400 italic'>No hay personas autorizadas registradas.</p>
+                    )}
+                </div>
+
+                {/* Form para añadir autorizados */}
+                {autorizados.length < 4 && (
+                    <form onSubmit={agregarAutorizado} className='pt-4 border-t border-gray-100 space-y-4'>
+                        <h3 className='text-sm font-semibold text-gray-700'>Añadir nueva persona</h3>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+                            <input
+                                type="text"
+                                placeholder='Nombre Completo'
+                                value={nuevoNombre}
+                                onChange={(e) => setNuevoNombre(e.target.value)}
+                                className='p-2 border border-gray-200 rounded-lg text-sm'
+                            />
+
+                            <input
+                                type="text"
+                                placeholder='DNI / NIE'
+                                value={nuevoDNI}
+                                onChange={(e) => setNuevoDni(e.target.value)}
+                                className='p-2 border border-gray-200 rounded-lg text-sm'
+                            />
+                        </div>
+                        <div>
+                            <label className='block text-xs text-gray-500 mb-1'>Foto DNI(Opcional):</label>
+                            <input
+                                type="file"
+                                accept='image/*'
+                                onChange={(e) => setNuevaFoto(e.target.files[0])}
+                                className='text-xs text-gray-500'
+                            />
+                        </div>
+                        <button
+                            type='submit'
+                            className='px-4 py-2 bg-gray-800 text-white text-xs font-medium rounded-lg hover:bg-gray-900 transition-colors'
+                        >
+                            Guardar Autorizado
+                        </button>
+                    </form>
+                )}
+            </div>
         </div>
     )
-
 }
