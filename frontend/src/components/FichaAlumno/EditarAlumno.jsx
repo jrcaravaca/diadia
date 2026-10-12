@@ -227,7 +227,7 @@ export default function EditarAlumno() {
                             </div>
                             <button
                                 type='button'
-                                onClick={() => eliminarAutorizado(aut - id)}
+                                onClick={() => eliminarAutorizado(aut.id)}
                                 className='text-red-500 hover:text-red-700 text-sm font-medium'
                             >
                                 Eliminar

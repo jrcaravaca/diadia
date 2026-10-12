@@ -15,6 +15,14 @@ class PersonaAutorizadaSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("detail","El sistema solo admite añadir 4 personas autorizadas")
         return data
 
+    def get_foto_dni(self, obj):
+        request = self.context.get('request')
+        if obj.foto_dni and  hasattr(obj.foto_dni, 'url'):
+            if request is not None:
+                return request.build_absolute_uri(obj.foto_dni.url)
+            return obj.foto_dni.url
+        return None
+
 class AlumnoSerializer(serializers.ModelSerializer): 
     autorizados = PersonaAutorizadaSerializer(many=True, read_only=True)
 
