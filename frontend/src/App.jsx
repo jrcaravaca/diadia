@@ -4,6 +4,7 @@ import VistaAulas from './components/VistaAulas/VistaAulas.jsx';
 import RegistrarAlumno from './components/FichaAlumno/RegistrarAlumno.jsx';
 import EditarAlumno from './components/FichaAlumno/EditarAlumno.jsx';
 import { Navbar } from './components/ui/Navbar.jsx';
+import Login from './pages/Login.jsx';
 
 function App() {
   return (
@@ -13,10 +14,12 @@ function App() {
 
       {/* CONTENIDO */}
       <Routes>
+        <Route path='/login' element={<Login />}></Route>
         <Route path="/" element={<VistaAulas />} />
         <Route path="/aula/:id" element={<DetalleAula />} />
         <Route path="/nuevo-alumno" element={<RegistrarAlumno />} />
         <Route path="/editar-alumno/:id" element={<EditarAlumno />} />
+
       </Routes>
     </div>
   );

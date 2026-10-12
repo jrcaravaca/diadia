@@ -59,7 +59,7 @@ class PerfilFamiliarSerializer(serializers.ModelSerializer):
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer): 
     @classmethod
 
-    def get.token(cls, user):
+    def get_token(cls, user):
         token = super().get_token(user)
 
         token['username'] = user.username
@@ -67,7 +67,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['rol'] = user.groups.first().name if user.groups.exists() else 'familiar'
         return token
     
-    def validate:
+    def validate():
         data = super().validate(attrs)
 
         data['user'] = {

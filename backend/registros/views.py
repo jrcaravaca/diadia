@@ -2,6 +2,8 @@ from rest_framework import viewsets
 from .models import Alumno, Registro, Aula, PerfilFamiliar, PersonaAutorizada
 from .serializers import AlumnoSerializer, RegistroSerializer, AulaSerializer, PerfilFamiliarSerializer, PersonaAutorizadaSerializer, CustomTokenObtainPairSerializer
 from django.utils import timezone
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class AlumnoViewSet(viewsets.ModelViewSet): 
     queryset = Alumno.objects.all()
@@ -46,7 +48,7 @@ class PersonaAutorizadaViewSet(viewsets.ModelViewSet):
     queryset = PersonaAutorizada.objects.all()
     serializer_class = PersonaAutorizadaSerializer
 
-class CustomTokenObtainPairView(TokenObtainPairSerializer): 
+class CustomTokenObtainPairView(TokenObtainPairView): 
     serializer_class = CustomTokenObtainPairSerializer
 
 
