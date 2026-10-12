@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import apiClient from "../../api/client";
 import { BotonAccion } from "../ui/BotonAccion";
 import { Link } from "react-router-dom";
+import ModalAutorizados from "../ui/ModalAutorizados.jsx";
 
 export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
     const [registros, setRegistros] = useState([])
+    const [mostrarModal, setMostrarModal] = useState(false);
 
     useEffect(() => {
         apiClient.get(`registros/?alumno=${alumno.id}`)
@@ -44,7 +46,7 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
 
 
             {/* AUTORIZADOS */}
-            <div className="p4 bg-gray-50/80 border border-gray-100 rounded-2xl">
+            {/* <div className="p4 bg-gray-50/80 border border-gray-100 rounded-2xl">
                 <p className="text-sm font-semibold mb-2">Autorizados:</p>
                 <div className="flex flex-col gap-2">
                     {alumno.autorizados.map(autorizado => (
@@ -53,7 +55,22 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
                         </p>
                     ))}
                 </div>
-            </div>
+            </div> */}
+
+            <button
+                onClick={() => setMostrarModal(true)}
+                className="px-3 py-1.5 bg-blue-50 text-dia-primary text-xs font-semibold rounded-xl hover:bg-blue-100 transition-colors flex items-center gap-1.5"
+            >
+                🪪 Ver Autorizados
+            </button>
+
+            {mostrarModal && (
+                <ModalAutorizados
+                    autorizados={alumno.autorizados}
+                    alumnoNombre={alumno.nombre}
+                    onClose={() => setMostrarModal(false)}
+                />
+            )}
 
             <Link to={`/editar-alumno/${alumno.id}`} className="text-sm text-blue-500 hover:underline">
                 Editar Alumno

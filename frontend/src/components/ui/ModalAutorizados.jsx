@@ -1,4 +1,4 @@
-import useState from "react"; 
+import { useState } from "react"; 
 
 export default function ModalAutorizados({ autorizados, alumnoNombre, onClose}) {
     const [fotoAmpliada, setFotoAmpliada] = useState(null); 
