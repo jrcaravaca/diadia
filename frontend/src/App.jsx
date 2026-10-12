@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import FichaAlumno from "./components/FichaAlumno/FichaAlumno.jsx";
+import DetalleAula from './components/VistaAulas/DetalleAula.jsx'
 import VistaAulas from './components/VistaAulas/VistaAulas.jsx';
 import RegistrarAlumno from './components/FichaAlumno/RegistrarAlumno.jsx';
 import EditarAlumno from './components/FichaAlumno/EditarAlumno.jsx';
@@ -14,7 +14,7 @@ function App() {
       {/* CONTENIDO */}
       <Routes>
         <Route path="/" element={<VistaAulas />} />
-        <Route path="/aula/:id" element={<FichaAlumno />} />
+        <Route path="/aula/:id" element={<DetalleAula />} />
         <Route path="/nuevo-alumno" element={<RegistrarAlumno />} />
         <Route path="/editar-alumno/:id" element={<EditarAlumno />} />
       </Routes>

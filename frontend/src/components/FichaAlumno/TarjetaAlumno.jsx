@@ -44,19 +44,6 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
                 </div>
             </div>
 
-
-            {/* AUTORIZADOS */}
-            {/* <div className="p4 bg-gray-50/80 border border-gray-100 rounded-2xl">
-                <p className="text-sm font-semibold mb-2">Autorizados:</p>
-                <div className="flex flex-col gap-2">
-                    {alumno.autorizados.map(autorizado => (
-                        <p key={autorizado.id} className="text-sm flex items-center gap-2 text-gray-500">
-                            <span className="w-1.5 h-1.5 rounded-full bg-dia-primary"></span> {autorizado.nombre_completo}
-                        </p>
-                    ))}
-                </div>
-            </div> */}
-
             <button
                 onClick={() => setMostrarModal(true)}
                 className="px-3 py-1.5 bg-blue-50 text-dia-primary text-xs font-semibold rounded-xl hover:bg-blue-100 transition-colors flex items-center gap-1.5"

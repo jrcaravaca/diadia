@@ -136,7 +136,7 @@ export default function EditarAlumno() {
     const eliminarAutorizado = (autorizadoId) => {
         if (!window.confirm("¿Seguro que quieres eliminar a esta persona autorizada?")) return;
 
-        apiClient.delete(`autorizados/${autorizadoId}`)
+        apiClient.delete(`autorizados/${autorizadoId}/`)
             .then(() => {
                 setAutorizados(autorizados.filter(a => a.id !== autorizadoId));
             })
