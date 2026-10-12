@@ -2,6 +2,8 @@ from django.contrib.auth import base_user
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Aula, Alumno, Registro, Mensaje, PerfilProfesor, PerfilFamiliar, PersonaAutorizada
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class PersonaAutorizadaSerializer(serializers.ModelSerializer): 
     class Meta: 
@@ -54,3 +56,24 @@ class PerfilFamiliarSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'dni', 'telefono']
 
 
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer): 
+    @classmethod
+
+    def get.token(cls, user):
+        token = super().get_token(user)
+
+        token['username'] = user.username
+        token['email'] = user.email
+        token['rol'] = user.groups.first().name if user.groups.exists() else 'familiar'
+        return token
+    
+    def validate:
+        data = super().validate(attrs)
+
+        data['user'] = {
+            'id' : self.user.id,
+            'username' : self.user.username,
+            'email' : self.user.email,
+            'rol' : self.user.groups.first().name if self.user.groups.exists() else 'familiar'
+        }
+        return data
