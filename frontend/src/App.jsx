@@ -5,6 +5,7 @@ import RegistrarAlumno from './components/FichaAlumno/RegistrarAlumno.jsx';
 import EditarAlumno from './components/FichaAlumno/EditarAlumno.jsx';
 import { Navbar } from './components/ui/Navbar.jsx';
 import Login from './pages/Login.jsx';
+import RutaProtegida from './components/common/RutaProtegida.jsx';
 
 function App() {
   return (
@@ -14,11 +15,14 @@ function App() {
 
       {/* CONTENIDO */}
       <Routes>
+        {/* Rutas Públicas */}
         <Route path='/login' element={<Login />}></Route>
-        <Route path="/" element={<VistaAulas />} />
-        <Route path="/aula/:id" element={<DetalleAula />} />
-        <Route path="/nuevo-alumno" element={<RegistrarAlumno />} />
-        <Route path="/editar-alumno/:id" element={<EditarAlumno />} />
+
+        {/* Rutas Protegidas */}
+        <Route path="/" element={<RutaProtegida><VistaAulas /></RutaProtegida>} />
+        <Route path="/aula/:id" element={<RutaProtegida><DetalleAula /></RutaProtegida>} />
+        <Route path="/nuevo-alumno" element={<RutaProtegida><RegistrarAlumno /></RutaProtegida>} />
+        <Route path="/editar-alumno/:id" element={<RutaProtegida><EditarAlumno /></RutaProtegida>} />
 
       </Routes>
     </div>

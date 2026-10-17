@@ -11,11 +11,11 @@ export default function Login() {
     const navigate = useNavigate(); 
 
     const handleSubmit = async (e) => {
-        e.prevent.default(); 
+        e.preventDefault(); 
         setError(''); 
 
         try {
-            await login(username, passlword); 
+            await login(username, password); 
             navigate('/'); 
         } catch (err) {
             console.error(err); 

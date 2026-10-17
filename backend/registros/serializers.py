@@ -67,7 +67,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['rol'] = user.groups.first().name if user.groups.exists() else 'familiar'
         return token
     
-    def validate():
+    def validate(self, attrs):
         data = super().validate(attrs)
 
         data['user'] = {
