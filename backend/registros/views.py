@@ -4,9 +4,11 @@ from .serializers import AlumnoSerializer, RegistroSerializer, AulaSerializer, P
 from django.utils import timezone
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from .permissions import EsDirectorOSoloLectura, EsDirectorOProfesorParaEscritura
 
 class AlumnoViewSet(viewsets.ModelViewSet): 
     serializer_class = AlumnoSerializer
+    permission_classes = [EsDirectorOSoloLectura]
 
     def get_queryset(self): 
         usuario = self.request.user
@@ -33,6 +35,7 @@ class AlumnoViewSet(viewsets.ModelViewSet):
 
 class RegistroViewSet(viewsets.ModelViewSet): 
     serializer_class = RegistroSerializer
+    permission_classes = [EsDirectorOProfesorParaEscritura]
 
     def get_queryset(self): 
         usuario = self.request.user
@@ -62,6 +65,7 @@ class RegistroViewSet(viewsets.ModelViewSet):
 
 class AulaViewSet(viewsets.ModelViewSet): 
     serializer_class = AulaSerializer
+    permission_classes = [EsDirectorOSoloLectura]
 
     def get_queryset(self): 
         usuario = self.request.user
