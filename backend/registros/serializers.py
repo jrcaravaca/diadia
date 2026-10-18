@@ -64,16 +64,20 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         token['username'] = user.username
         token['email'] = user.email
+        token['is_superuser'] = user.is_superuser
         token['rol'] = user.groups.first().name if user.groups.exists() else 'familiar'
         return token
     
     def validate(self, attrs):
         data = super().validate(attrs)
 
+        rol_nombre = self.user.groups.first().name.lower() if self.user.groups.exists() else ('director' if self.user.is_superuser else 'familiar')
+
         data['user'] = {
-            'id' : self.user.id,
-            'username' : self.user.username,
-            'email' : self.user.email,
-            'rol' : self.user.groups.first().name if self.user.groups.exists() else 'familiar'
+            'id': self.user.id,
+            'username': self.user.username,
+            'email': self.user.email,
+            'is_superuser': self.user.is_superuser,
+            'rol': rol_nombre
         }
         return data

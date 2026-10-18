@@ -1,12 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import apiClient from "../../api/client";
 import { BotonAccion } from "../ui/BotonAccion";
 import { Link } from "react-router-dom";
 import ModalAutorizados from "../ui/ModalAutorizados.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx"
 
 export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
+    const { user } = useContext(AuthContext); 
     const [registros, setRegistros] = useState([])
     const [mostrarModal, setMostrarModal] = useState(false);
+
+    const rolActual = user?.rol?.toLowerCase(); 
+    const esDirector = user?.is_superuser || rolActual === 'director'; 
+    const esProfesor = rolActual === 'profesor';
+    const puedeRegistrar = esDirector || esProfesor; 
 
     useEffect(() => {
         apiClient.get(`registros/?alumno=${alumno.id}`)
@@ -58,17 +65,21 @@ export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
                     onClose={() => setMostrarModal(false)}
                 />
             )}
-
-            <Link to={`/editar-alumno/${alumno.id}`} className="text-sm text-blue-500 hover:underline">
-                Editar Alumno
-            </Link>
+            {esDirector && ( 
+                <Link to={`/editar-alumno/${alumno.id}`} className="text-sm text-blue-500 hover:underline">
+                    Editar Alumno
+                </Link>
+            )}
 
             {/* BOTONES */}
-            <div className="flex justify-between items-center mt-2 p-4 border-t border-gray-100">
+            {puedeRegistrar && (
+                <div className="flex justify-between items-center mt-2 p-4 border-t border-gray-100">
                 <BotonAccion icono="🍽️" texto="Comida" colorFondo="bg-dia-secondary" onClick={() => onAbrirModal(alumno.id, 'COMIDA', alumno.nombre)} />
                 <BotonAccion icono="🌙" texto="Siesta" colorFondo="bg-dia-primary" onClick={() => onAbrirModal(alumno.id, 'SIESTA', alumno.nombre)} />
                 <BotonAccion icono="💧" texto="Baño" colorFondo="bg-dia-tertiary" onClick={() => onAbrirModal(alumno.id, 'BAÑO', alumno.nombre)} />
             </div>
+            )}
+            
 
             {/* HISTORIAL DE REGISTROS */}
             <div className="pt-2 border-t border-gray-100">
