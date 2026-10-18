@@ -77,10 +77,10 @@ class AulaViewSet(viewsets.ModelViewSet):
             queryset = Aula.objects.filter(alumnos__familiares__usuario=usuario).distinct()
         else:
             return Aula.objects.none()
+        
+        return queryset.distinct()
 
-        return Aula.objects.none()
-
-
+        
 class PerfilFamiliarViewSet(viewsets.ModelViewSet): 
     serializer_class = PerfilFamiliarSerializer
 
@@ -99,7 +99,7 @@ class PerfilFamiliarViewSet(viewsets.ModelViewSet):
         else:
             return PerfilFamiliar.objects.none()
 
-        return PerfilFamiliar.objects.none()
+        return queryset.distinct()
 
 
 class PersonaAutorizadaViewSet(viewsets.ModelViewSet): 
@@ -119,12 +119,8 @@ class PersonaAutorizadaViewSet(viewsets.ModelViewSet):
             queryset = PersonaAutorizada.objects.filter(familiares__usuario=usuario)
         else:
             return PersonaAutorizada.objects.none()
-
-        return PersonaAutorizada.objects.none()
-
-
-
-
+        
+        
 class CustomTokenObtainPairView(TokenObtainPairView): 
     serializer_class = CustomTokenObtainPairSerializer
 
