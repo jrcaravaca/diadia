@@ -69,12 +69,12 @@ class AulaViewSet(viewsets.ModelViewSet):
             return Aula.objects.none()
         
         # Filtro por Rol
-        if usuario.is_superuser or usuario.groups.filter(name='director').exists():
+        if usuario.is_superuser or usuario.groups.filter(name__iexact='director').exists():
             queryset = Aula.objects.all()
-        elif usuario.groups.filter(name='profesor').exists(): 
-            queryset = Aula.objects.filter(aula__profesor__usuario=usuario)
-        elif usuario.groups.filter(name='familiar').exists(): 
-            queryset = Aula.objects.filter(familiares__usuario=usuario)
+        elif usuario.groups.filter(name__iexact='profesor').exists(): 
+            queryset = Aula.objects.filter(profesor__usuario=usuario).distinct()
+        elif usuario.groups.filter(name__iexact='familiar').exists(): 
+            queryset = Aula.objects.filter(alumnos__familiares__usuario=usuario).distinct()
         else:
             return Aula.objects.none()
 

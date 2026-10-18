@@ -7,11 +7,11 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 router = DefaultRouter()
 
-router.register(r'alumnos', AlumnoViewSet)
-router.register(r'registros', RegistroViewSet)
-router.register(r'aulas', AulaViewSet)
-router.register(r'familiares', PerfilFamiliarViewSet)
-router.register(r'autorizados', PersonaAutorizadaViewSet)
+router.register(r'alumnos', AlumnoViewSet, basename='alumno')
+router.register(r'registros', RegistroViewSet, basename='registro')
+router.register(r'aulas', AulaViewSet, basename='aula')
+router.register(r'familiares', PerfilFamiliarViewSet, basename='perfilfamiliar')
+router.register(r'autorizados', PersonaAutorizadaViewSet, basename='personaautorizada')
 
 urlpatterns = [
     path('api/', include(router.urls)),
