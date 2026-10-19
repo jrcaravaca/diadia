@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { Navigate } from 'react-router-dom'; 
+import { Navigate, Outlet } from 'react-router-dom'; 
 import { AuthContext } from './AuthProvider.jsx';
 
 export default function RutaProtegida({ children }) {
     const { user, loading } = useContext(AuthContext); 
 
     // Mientras comprueba localStorage no mostramos nada
-    if (loading) return null; 
+    if (loading) return <div className="p-8 text-center">Cargando...</div>; 
 
     // Si no hay usuario autenticado, redirecciona a la vista Login
     if (!user) {
@@ -14,5 +14,5 @@ export default function RutaProtegida({ children }) {
     }
 
     // Si todo está bien, renderiza la vista solicitada
-    return children; 
+    return <Outlet />;
 }; 
