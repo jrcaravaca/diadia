@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from 'react-router-dom';
-import apiClient from "../../api/client.js";
-import { ModalRegistro } from "../ui/ModalRegistro.jsx";
-import TarjetaAlumno from "../FichaAlumno/TarjetaAlumno.jsx";
+import apiClient from "../shared/api/client.js";
+import { ModalRegistro } from "../features/registros/components/ModalRegistro.jsx";
+import TarjetaAlumno from "../features/alumnos/components/TarjetaAlumno.jsx";
 
 
-export default function DetalleAula() {
+export default function DetalleAulaPage() {
     const { id } = useParams();
     const [alumnos, setAlumnos] = useState([]);
     const [modalConfig, setModalConfig] = useState({ activo: false, alumnoId: null, tipo: '', nombre: '' });
     const [refresh, setRefresh] = useState(0);
-    
+
 
     useEffect(() => {
         apiClient.get(`alumnos/?aula=${id}`)

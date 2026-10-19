@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import apiClient from "../../api/client";
+import apiClient from "../../../shared/api/client.js";
 
 export default function RegistrarAlumno() {
     const [aulas, setAulas] = useState([]);

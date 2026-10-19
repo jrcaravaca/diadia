@@ -1,5 +1,5 @@
 import { useContext }from 'react'; 
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../features/auth/AuthProvider.jsx';
 import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {

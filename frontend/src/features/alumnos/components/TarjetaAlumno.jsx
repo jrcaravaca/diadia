@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import apiClient from "../../api/client";
-import { BotonAccion } from "../ui/BotonAccion";
+import apiClient from "../../../shared/api/client.js";
+import { BotonAccion } from "../../../shared/components/BotonAccion.jsx";
 import { Link } from "react-router-dom";
-import ModalAutorizados from "../ui/ModalAutorizados.jsx";
-import { AuthContext } from "../../context/AuthContext.jsx"
+import ModalAutorizados from "../../../features/autorizados/components/ModalAutorizados.jsx";
+import { AuthContext } from "../../auth/AuthProvider.jsx";
 
 export default function TarjetaAlumno({ alumno, onAbrirModal, refresh }) {
     const { user } = useContext(AuthContext); 

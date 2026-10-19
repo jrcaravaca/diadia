@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../features/auth/AuthProvider.jsx";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(''); 
