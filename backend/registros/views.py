@@ -28,7 +28,7 @@ class AlumnoViewSet(viewsets.ModelViewSet):
         #Filtro por aula
         aula_id = self.request.query_params.get('aula')
         if aula_id is not None: 
-            queryset.filter(aula_id=aula_id)
+            queryset = queryset.filter(aula_id=aula_id)
 
         return queryset.distinct()
 
@@ -60,7 +60,7 @@ class RegistroViewSet(viewsets.ModelViewSet):
                 fecha_hora__date=hoy
             )
 
-        return queryset.order_by('-fecha-hora').distinct()
+        return queryset.order_by('-fecha_hora').distinct()
 
 
 class AulaViewSet(viewsets.ModelViewSet): 
@@ -123,6 +123,8 @@ class PersonaAutorizadaViewSet(viewsets.ModelViewSet):
             queryset = PersonaAutorizada.objects.filter(familiares__usuario=usuario)
         else:
             return PersonaAutorizada.objects.none()
+        
+        return queryset.distinct()
         
         
 class CustomTokenObtainPairView(TokenObtainPairView): 

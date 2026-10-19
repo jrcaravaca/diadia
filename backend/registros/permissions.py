@@ -9,14 +9,14 @@ class EsDirectorOSoloLectura(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         
-        return request.user.is_superuser or request.user.groups.filter(name__iexact='director').exits()
+        return request.user.is_superuser or request.user.groups.filter(name__iexact='director').exists()
 
 class EsDirectorOProfesorParaEscritura(permissions.BasePermission):
     def has_permission(self, request, view):
         if not request.user or not request.user.is_authenticated:
             return False
 
-        if reques.method in permissions.SAFE_METHODS:
+        if request.method in permissions.SAFE_METHODS:
             return True
         
         es_director = request.user.is_superuser or request.user.groups.filter(name__iexact='director').exists()
